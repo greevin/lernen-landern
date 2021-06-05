@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Lernen Ländern</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{countries.length}} Countries/Ländern
+        </h2>
+        <div v-for="country in countries">
+            <ul>
+                <li>EN: {{country.name}}</li>
+                <li>DE: {{country.translations.de}}</li>
+                <img :src="country.flag" alt="country.name" style="width: 100px;"></img>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                countries: {}
+            },
+            methods: {
+                getData() {
+                    fetch('https://restcountries.eu/rest/v2/all')
+                    .then(response => response.json())
+                    .then(response => {
+                        this.countries = response
+                    })
+                }
+            },
+            created() {
+                this.getData()
+            }
+        })
+        console.log(vm)
+    </script>
+</body>
+</html>
